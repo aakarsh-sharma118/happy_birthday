@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+<title>Happy Birthday Anisha 🎀</title>
+
+<!-- Social Media Link Preview Meta Tags -->
+<meta property="og:title" content="Happy Birthday Anisha 🎀">
+<meta property="og:description" content="A very special birthday celebration! Make a wish... 🎂✨">
+<meta property="og:image" content="assets/new_cake_gifts_1780161455521.png">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Happy Birthday Anisha 🎀">
+<meta name="twitter:description" content="A very special birthday celebration! Make a wish... 🎂✨">
+<meta name="twitter:image" content="assets/new_cake_gifts_1780161455521.png">
+
+<!-- Favicon for the website tab -->
+<link rel="icon" href="assets/new_cake_gifts_1780161455521.png" type="image/png">
+
+<!-- Secure Fonts from Google -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Satisfy&display=swap" rel="stylesheet">
+
+<!-- FontAwesome for Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- GSAP and ScrollTrigger -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<style>
+/* CSS Variables */
+:root {
+    --bg-pink: #ff9fb3;
+    --text-red: #d32f2f;
+    --text-dark: #2c3e50;
+    --curve-blue: #1e375a;
+    --white: #ffffff;
+    --dot-color: rgba(255, 255, 255, 0.4);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+    touch-action: pan-x pan-y; /* Strictly prevent pinch-zoom on mobile */
+}
+
+body {
+    background-color: var(--bg-pink);
+    font-family: "Poppins", sans-serif;
+    color: var(--text-dark);
+    overflow-x: hidden;
+}
+
+/* Preloader */
+#preloader {
+    position: fixed;
+    inset: 0;
+    background-color: var(--bg-pink);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.loader-cat {
+    width: clamp(200px, 40vw, 300px);
+    mix-blend-mode: multiply;
+    z-index: 2;
+    animation: bounceCat 1.5s ease-in-out infinite;
+    filter: drop-shadow(0 10px 10px rgba(0,0,0,0.1));
+}
+@keyframes bounceCat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+.loading-bar-container {
+    width: clamp(200px, 40vw, 300px);
+    height: 25px;
+    border: 4px solid #111;
+    border-radius: 20px;
+    background: #fff;
+    margin-top: -10px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 4px 0 #111;
+    z-index: 3;
+}
+.loading-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--text-red);
+    border-radius: 10px;
+}
+.loader-text-new {
+    margin-top: 15px;
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: #111;
+    letter-spacing: 2px;
+}
+
+/* Header */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    background: linear-gradient(to bottom, rgba(255,159,179,1) 0%, rgba(255,159,179,0) 100%);
+}
+.logo {
+    font-family: "Satisfy", cursive;
+    font-size: clamp(24px, 4vw, 32px);
+    color: var(--text-red);
+    font-weight: bold;
+}
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-dark);
+    font-weight: 600;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+.nav-links a:hover {
+    color: var(--white);
+}
+
+/* Pagination Sidebar */
+.pagination {
+    position: fixed;
+    left: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    z-index: 50;
+}
+.arrow {
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+.arrow:hover { transform: scale(1.2); }
+.arrow-up {
+    border-bottom: 8px solid var(--text-red);
+    margin-bottom: 10px;
+}
+.arrow-down {
+    border-top: 8px solid var(--text-red);
+    margin-top: 10px;
+}
+.page-num {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-dark);
+    opacity: 0.5;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    cursor: pointer;
+}
+.page-num.active {
+    font-size: 28px;
+    color: var(--white);
+    opacity: 1;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Bottom Curve */
+.bottom-curve {
+    position: fixed;
+    bottom: -15vh;
+    left: -10%;
+    width: 120%;
+    height: 35vh;
+    background-color: var(--curve-blue);
+    border-top-left-radius: 50% 100%;
+    border-top-right-radius: 50% 100%;
+    z-index: 0;
+    background-image: radial-gradient(var(--dot-color) 2px, transparent 2px);
+    background-size: 30px 30px;
+}
+
+/* Sections */
+.section {
+    position: relative;
+    width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 80px 50px 15vh 150px; /* Space for pagination and curve */
+    z-index: 10;
+}
+
+/* Section 1: Hero */
+.hero-content {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    justify-content: space-between;
+    align-items: center;
+}
+.text-col {
+    width: 45%;
+}
+.graphic-col {
+    width: 50%;
+    position: relative;
+    height: 450px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+.main-title {
+    font-size: clamp(40px, 8vw, 80px);
+    font-weight: 800;
+    color: var(--text-red);
+    line-height: 1.1;
+    margin-bottom: 15px;
+}
+.sub-title {
+    font-family: "Satisfy", cursive;
+    font-size: clamp(30px, 5vw, 45px);
+    color: var(--white);
+    margin-bottom: 20px;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+.desc-text {
+    font-size: clamp(14px, 3vw, 16px);
+    line-height: 1.8;
+    color: var(--text-dark);
+    margin-bottom: 30px;
+    font-weight: 500;
+}
+/* Call to Action Button */
+.btn-wrapper {
+    position: relative;
+    z-index: 1000;
+    margin-top: 20px;
+}
+.btn-primary {
+    background-color: var(--white);
+    background-image: linear-gradient(135deg, #ffffff, #ffe0e9);
+    color: var(--text-dark);
+    border: none;
+    padding: 15px 40px;
+    font-size: 18px;
+    font-weight: 800;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    z-index: 100; /* Ensure button is above balloons on mobile */
+}
+.btn-primary:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 15px 30px rgba(255,107,129,0.4), 0 0 20px rgba(255,255,255,0.6);
+}
+.btn-primary:active {
+    transform: translateY(2px) scale(0.95);
+    box-shadow: 0 5px 15px rgba(255,107,129,0.3), inset 0 0 10px rgba(255,107,129,0.2);
+}
+/* Font/Button animation class for click */
+.btn-clicked-anim {
+    animation: bounceBtn 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+@keyframes bounceBtn {
+    0%, 100% { transform: translateY(0) scale(1); }
+    25% { transform: translateY(-10px) scale(1.1); }
+    50% { transform: translateY(5px) scale(0.95); }
+    75% { transform: translateY(-5px) scale(1.05); }
+}
+
+/* Graphic Illustration Styles */
+.illus-cake {
+    width: clamp(200px, 40vw, 350px);
+    position: relative;
+    z-index: 5;
+    mix-blend-mode: multiply;
+}
+.illus-balloon {
+    position: absolute;
+    width: clamp(80px, 15vw, 120px);
+    mix-blend-mode: multiply;
+}
+.b1 { top: 0; left: 10%; }
+.b2 { top: -40px; right: 20%; }
+.b3 { top: 60px; right: 0; width: clamp(60px, 12vw, 90px); }
+
+/* Story & Memory Panels */
+.story-panel {
+    /* Fun, vibrant, wavy birthday background */
+    background-image: url('assets/wavy_birthday_bg_1780163764918.png');
+    background-size: cover;
+    background-position: center;
+    background-color: rgba(255, 255, 255, 0.85); /* Frosty overlay */
+    background-blend-mode: overlay; /* Blend the pattern subtly */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 40px;
+    padding: 60px 40px;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    /* Deep colorful box shadow and inner glow */
+    box-shadow: 
+        0 30px 60px rgba(211, 47, 47, 0.15), 
+        inset 0 0 0 5px rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 182, 193, 0.6);
+    position: relative;
+    overflow: hidden; /* Contain background decorative blobs */
+    z-index: 1;
+}
+
+/* Decorative background blobs inside the card */
+.story-panel::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, rgba(255,107,129,0.15) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: -1;
+}
+.story-panel::after {
+    content: '';
+    position: absolute;
+    bottom: -50px;
+    left: -50px;
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, rgba(255,182,193,0.25) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: -1;
+}
+
+/* Dedicated elements for floating emojis to keep it professional */
+.card-emoji-1, .card-emoji-2 {
+    position: absolute;
+    font-size: 35px;
+    z-index: 2;
+    opacity: 0.9;
+    filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1));
+}
+.card-emoji-1 {
+    top: 25px;
+    left: 35px;
+    animation: pulse 2.5s infinite;
+}
+.card-emoji-2 {
+    bottom: 25px;
+    right: 35px;
+    animation: floatAnim 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+.story-title {
+    font-size: clamp(32px, 6vw, 50px);
+    color: var(--text-red);
+    margin-bottom: 40px;
+    text-align: center;
+    font-weight: 800;
+}
+.profiles {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin-bottom: 40px;
+}
+.profile-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+.profile-img {
+    width: clamp(100px, 20vw, 160px);
+    height: clamp(100px, 20vw, 160px);
+    border-radius: 50%;
+    border: 6px solid var(--white);
+    object-fit: cover;
+    box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+    transition: transform 0.4s ease;
+}
+.profile-img:hover {
+    transform: scale(1.08) rotate(3deg);
+}
+.profile-name {
+    font-family: "Satisfy", cursive;
+    font-size: 24px;
+    color: var(--text-dark);
+}
+.message-bubble {
+    background: var(--white);
+    padding: 20px 30px;
+    border-radius: 25px;
+    font-size: clamp(16px, 3vw, 20px);
+    font-weight: 600;
+    color: var(--text-red);
+    position: relative;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+.message-bubble::after {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 8px solid transparent;
+    border-bottom-color: var(--white);
+}
+
+/* Gallery Section */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+.gallery-img {
+    width: 100%;
+    height: clamp(200px, 30vw, 350px);
+    object-fit: contain; /* Ensure images fit completely without cropping */
+    /* Add wavy background to the images' empty space */
+    background-image: url('assets/wavy_birthday_bg_1780163764918.png');
+    background-size: cover;
+    background-position: center;
+    background-color: rgba(255, 255, 255, 0.85);
+    background-blend-mode: overlay;
+    border-radius: 25px;
+    border: 6px solid var(--white);
+    box-shadow: 0 15px 30px rgba(211, 47, 47, 0.15); /* Lively colorful shadow */
+    transition: transform 0.4s ease;
+}
+.gallery-img:hover {
+    transform: scale(1.05);
+}
+
+/* Responsive Overrides */
+@media (max-width: 900px) {
+    header { padding: 15px 25px; }
+    .nav-links { display: none; }
+    .pagination { 
+        left: 50%; 
+        top: auto; 
+        bottom: 20px; 
+        transform: translateX(-50%); 
+        flex-direction: row; 
+        background: rgba(255,255,255,0.8);
+        backdrop-filter: blur(10px);
+        padding: 10px 25px;
+        border-radius: 30px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    .arrow { display: none; }
+    .page-num { font-size: 14px; margin: 0 10px; }
+    .page-num.active { font-size: 22px; color: var(--text-red); }
+    
+    .section { padding: 80px 25px 100px 25px; }
+    .hero-content { flex-direction: column; text-align: center; }
+    .text-col, .graphic-col { width: 100%; }
+    .graphic-col { height: 350px; margin-top: 30px; }
+    
+    .profiles { flex-direction: column; gap: 20px; }
+    .message-bubble::after {
+        top: auto;
+        bottom: -15px;
+        transform: translateX(-50%) rotate(180deg);
+    }
+    
+    .gallery-grid { grid-template-columns: 1fr; gap: 20px; }
+    .gallery-img { transform: none !important; } /* Disable staggered transform on mobile */
+    .bottom-curve { height: 25vh; bottom: -10vh; }
+    /* Move sound control to top right header on mobile */
+    .sound-control { 
+        top: 15px; 
+        bottom: auto; 
+        right: 20px; 
+        width: 45px; 
+        height: 45px; 
+        font-size: 18px; 
+        z-index: 1001; /* Stay above header */
+    }
+}
+
+/* Sound Control Button */
+.sound-control {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #ff9fb3, #ff6b81);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(255,107,129,0.5);
+    z-index: 1000;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s;
+    border: 3px solid rgba(255, 255, 255, 0.8);
+}
+.sound-control:hover { 
+    transform: scale(1.15) rotate(5deg);
+    box-shadow: 0 12px 30px rgba(255,107,129,0.6);
+}
+</style>
+</head>
+<body>
+
+<!-- Preloader -->
+<div id="preloader">
+    <img class="loader-cat" src="assets/cat_cake_preloader_1780163227004.png" alt="Happy Cat">
+    <div class="loading-bar-container">
+        <div class="loading-bar-fill"></div>
+    </div>
+    <div class="loader-text-new">LOADING.</div>
+</div>
+
+<!-- Header -->
+<header>
+    <div class="logo">Choti Puri 🎀</div>
+    <div class="nav-links">
+        <a href="#sec-1">Home</a>
+        <a href="#sec-2">Our Story</a>
+        <a href="#sec-3">Diwali</a>
+        <a href="#sec-4">Birthday Girl</a>
+    </div>
+</header>
+
+<!-- Pagination Sidebar -->
+<div class="pagination">
+    <div class="arrow arrow-up" onclick="scrollUp()"></div>
+    <div class="page-num active" id="dot-1" onclick="scrollToSec(1)">01</div>
+    <div class="page-num" id="dot-2" onclick="scrollToSec(2)">02</div>
+    <div class="page-num" id="dot-3" onclick="scrollToSec(3)">03</div>
+    <div class="page-num" id="dot-4" onclick="scrollToSec(4)">04</div>
+    <div class="arrow arrow-down" onclick="scrollDown()"></div>
+</div>
+
+<!-- Bottom Curve Background -->
+<div class="bottom-curve"></div>
+
+<!-- Sound Control -->
+<div class="sound-control" onclick="toggleMute()">
+    <i id="sound-icon" class="fa-solid fa-music"></i>
+</div>
+<audio id="bg-music" src="assets/song.mp3" loop></audio>
+
+<!-- Sections -->
+<div class="section" id="sec-1">
+    <div class="hero-content">
+        <div class="text-col">
+            <h1 class="main-title gs-fade-up">Happy <br>Birthday</h1>
+            <h2 class="sub-title gs-fade-up" style="animation-delay: 0.2s">To my Anisha</h2>
+            <p class="desc-text gs-fade-up" style="animation-delay: 0.4s">
+                Wishing the most amazing girl the happiest of birthdays. From that first message to our beautiful Diwali, every moment with you has been a gift.
+            </p>
+            <div class="btn-wrapper">
+                <button class="btn-primary" onclick="triggerConfetti(this)">Celebrate! <i class="fa-solid fa-gift" style="color: var(--text-red); margin-left: 5px;"></i></button>
+            </div>
+        </div>
+        <div class="graphic-col gs-parallax">
+            <!-- 7 Balloons scattered around -->
+            <img class="illus-balloon floating-anim" src="assets/party_balloon_1780160247234.png" alt="Balloon" style="top: -60px; left: 5%; animation-delay: 0s;">
+            <img class="illus-balloon floating-anim" src="assets/party_balloon_1780160247234.png" alt="Balloon" style="top: -20px; left: 25%; width: clamp(60px, 10vw, 90px); animation-delay: 1.2s; filter: hue-rotate(45deg) drop-shadow(0 15px 15px rgba(0,0,0,0.1));">
+            <img class="illus-balloon floating-anim" src="assets/party_balloon_1780160247234.png" alt="Balloon" style="top: -80px; left: 45%; animation-delay: 2.5s; filter: hue-rotate(180deg) drop-shadow(0 15px 15px rgba(0,0,0,0.1));">
+            <img class="illus-balloon floating-anim" src="assets/party_balloon_1780160247234.png" alt="Balloon" style="top: -30px; right: 30%; width: clamp(70px, 12vw, 100px); animation-delay: 0.8s; filter: hue-rotate(280deg) drop-shadow(0 15px 15px rgba(0,0,0,0.1));">
+            <img class="illus-balloon floating-anim" src="assets/party_balloon_1780160247234.png" alt="Balloon" style="top: 20px; right: 10%; animation-delay: 1.8s; filter: hue-rotate(-45deg) drop-shadow(0 15px 15px rgba(0,0,0,0.1));">
+            <img class="illus-balloon floating-anim" src="assets/party_balloon_1780160247234.png" alt="Balloon" style="top: 80px; right: -5%; width: clamp(50px, 8vw, 70px); animation-delay: 0.4s; filter: hue-rotate(90deg) drop-shadow(0 15px 15px rgba(0,0,0,0.1));">
+            <img class="illus-balloon floating-anim" src="assets/party_balloon_1780160247234.png" alt="Balloon" style="top: 50px; left: -10%; width: clamp(50px, 8vw, 80px); animation-delay: 2.1s; filter: hue-rotate(320deg) drop-shadow(0 15px 15px rgba(0,0,0,0.1));">
+            
+            <img class="illus-cake floating-anim" src="assets/new_cake_gifts_1780161455521.png" alt="Birthday Cake" style="animation-duration: 4s; width: clamp(250px, 50vw, 450px);">
+        </div>
+    </div>
+</div>
+
+<div class="section" id="sec-2">
+    <div class="story-panel gs-parallax-y">
+        <div class="card-emoji-1">✨</div>
+        <div class="card-emoji-2">💖</div>
+        <h2 class="story-title">How It All Started</h2>
+        <div class="profiles">
+            <div class="profile-card">
+                <img id="sanji-pic" class="profile-img" src="assets/sanji_anime_1780160262330.png" alt="Sanji">
+                <div class="profile-name">Sanji</div>
+            </div>
+            <div class="message-bubble">
+                "naami swaan😍😍😍"
+            </div>
+            <div class="profile-card">
+                <img id="nami-pic" class="profile-img" src="assets/nami_anime_1780160280133.png" alt="Nami">
+                <div class="profile-name">Nami</div>
+            </div>
+        </div>
+        <p class="desc-text" style="text-align: center; max-width: 600px; margin: 0 auto;">
+            I saw your Nami profile picture, and with my Sanji picture, I had to slide in. That playful message sparked a connection that grew into something beautiful.
+        </p>
+    </div>
+</div>
+
+<div class="section" id="sec-3">
+    <!-- Diwali & Dating Story Panel -->
+    <div class="story-panel gs-parallax-y">
+        <div class="card-emoji-1"><i class="fa-solid fa-fire"></i></div>
+        <div class="card-emoji-2"><i class="fa-solid fa-heart"></i></div>
+        <h2 class="story-title">Diwali 2023</h2>
+        <p class="desc-text" style="text-align: center; font-size: clamp(20px, 4vw, 28px); font-weight: 700; color: var(--text-dark);">
+            November 12th, 2023
+        </p>
+        <p class="desc-text" style="text-align: center; max-width: 650px; margin: 0 auto;">
+            Diwali 2023 was the magical night we really started talking seriously 😉😉😘. You brought so much light into my life during the festival of lights. That beautiful spark eventually led to us officially dating in February 2024. Here is to celebrating you, our amazing journey, and all the romantic moments yet to come 😉
+        </p>
+    </div>
+</div>
+
+<div class="section" id="sec-4" style="flex-direction: column; justify-content: center;">
+    <!-- Dedicated Section Heading for Birthday Girl -->
+    <div style="text-align: center; width: 100%; margin-bottom: 40px;" class="gs-parallax-y">
+        <h2 class="story-title" style="margin-bottom: 0;">Birthday Girl <i class="fa-solid fa-camera-retro" style="color: var(--text-dark);"></i></h2>
+    </div>
+    <div class="gallery-grid">
+        <img class="gallery-img gs-parallax" src="assets/memory_one_1780160303924.png" alt="Memory">
+        <!-- Center image pushed down slightly on desktop for staggered look -->
+        <img class="gallery-img gs-parallax center-img" src="assets/memory_two_1780160318768.png" alt="Memory">
+        <img class="gallery-img gs-parallax" src="assets/memory_three_1780160335503.png" alt="Memory">
+    </div>
+</div>
+
+<style>
+/* CSS Animations for floating */
+.floating-anim {
+    animation: floatAnim 5s ease-in-out infinite;
+}
+@keyframes floatAnim {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+@media (min-width: 901px) {
+    .center-img { transform: translateY(50px); }
+}
+</style>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// --- SECURITY & ANTI-DEBUGGER ---
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('keydown', e => {
+    if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'u')) {
+        e.preventDefault();
+    }
+});
+setInterval(() => {
+    const before = new Date().getTime();
+    debugger; // This pauses execution if dev tools are open
+    const after = new Date().getTime();
+    if (after - before > 100) {
+        document.body.innerHTML = '<div style="display:flex;height:100vh;width:100vw;align-items:center;justify-content:center;background:#111;margin:0;"><h1 style="color:white;font-family:sans-serif;text-align:center;">Nice try! Have a great day! 😉</h1></div>';
+        setTimeout(() => window.location.reload(), 2000);
+    }
+}, 500);
+
+// --- SOUND LOGIC ---
+let storedMute = localStorage.getItem('birthday_muted');
+let isMuted = storedMute !== null ? storedMute === 'true' : false; // Default to unmuted
+const bgMusic = document.getElementById('bg-music');
+const soundIcon = document.getElementById('sound-icon');
+
+function updateSoundIcon() {
+    soundIcon.className = isMuted ? 'fa-solid fa-volume-xmark' : 'fa-solid fa-music';
+}
+updateSoundIcon();
+
+function initAudio() {
+    bgMusic.muted = isMuted;
+    if (!isMuted) {
+        bgMusic.play().catch(e => console.log('Autoplay blocked.'));
+    }
+}
+// Start audio upon first user interaction (browser fallback)
+document.addEventListener('click', initAudio, { once: true });
+document.addEventListener('scroll', initAudio, { once: true });
+
+window.toggleMute = function() {
+    isMuted = !isMuted;
+    bgMusic.muted = isMuted;
+    localStorage.setItem('birthday_muted', isMuted);
+    updateSoundIcon();
+    if (!isMuted) {
+        bgMusic.play().catch(e => {}); // Ensure playing if previously blocked
+    }
+};
+
+// 0. Setup & Random Background
+if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+}
+window.scrollTo(0, 0);
+window.addEventListener('beforeunload', () => window.scrollTo(0, 0));
+setTimeout(() => window.scrollTo(0, 0), 50);
+
+const backgrounds = [
+    'url("assets/site_bg_1_1780164153681.png")',
+    'url("assets/site_bg_2_1780164167135.png")',
+    'url("assets/site_bg_3_1780166265413.png")'
+];
+const randomBg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+
+document.body.style.backgroundImage = randomBg;
+document.body.style.backgroundSize = '400px'; 
+document.body.style.backgroundAttachment = 'fixed';
+document.body.style.backgroundBlendMode = 'soft-light'; // Softly blend with the pink background
+
+const preloader = document.getElementById('preloader');
+if (preloader) {
+    preloader.style.backgroundImage = randomBg;
+    preloader.style.backgroundSize = '400px';
+    preloader.style.backgroundBlendMode = 'soft-light';
+}
+
+// 1. Preloader Sequence
+window.addEventListener('load', () => {
+    const tlLoader = gsap.timeline();
+    
+    // Simulate loading bar filling up
+    tlLoader.to('.loading-bar-fill', {
+        width: "100%",
+        duration: 2,
+        ease: "power2.inOut"
+    })
+    // Little pause when full
+    .to({}, { duration: 0.5 })
+    // Fade out preloader smoothly
+    .to('#preloader', {
+        opacity: 0,
+        duration: 0.8,
+        ease: "power2.inOut",
+        onComplete: () => {
+            // Use visibility to prevent layout reflow stutter
+            const pl = document.getElementById('preloader');
+            pl.style.visibility = 'hidden';
+            pl.style.pointerEvents = 'none';
+            // Start scroll animations exactly when ready
+            requestAnimationFrame(() => {
+                initScrollAnimations();
+                ScrollTrigger.refresh();
+                
+                // Attempt to play music automatically once preloader ends
+                if (!isMuted) {
+                    bgMusic.play().catch(e => {
+                        console.log('Autoplay blocked by browser until user interaction.');
+                    });
+                }
+            });
+        }
+    });
+    
+    // Loading text dot animation
+    const loadText = document.querySelector('.loader-text-new');
+    let dots = 1;
+    const dotInterval = setInterval(() => {
+        dots = (dots % 3) + 1;
+        if(loadText) loadText.innerHTML = 'LOADING' + '.'.repeat(dots);
+    }, 400);
+    
+    // Clear interval when preloader fades
+    setTimeout(() => clearInterval(dotInterval), 2500);
+});
+
+// 2. Initialize Main GSAP Animations
+function initScrollAnimations() {
+    // Hero Text Stagger
+    gsap.from('.gs-fade-up', {
+        y: 40,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.2,
+        ease: "power3.out"
+    });
+
+    // Update Pagination on Scroll
+    const sections = document.querySelectorAll('.section');
+    const dots = document.querySelectorAll('.page-num');
+
+    sections.forEach((sec, i) => {
+        ScrollTrigger.create({
+            trigger: sec,
+            start: "top center",
+            end: "bottom center",
+            onToggle: self => {
+                if (self.isActive) {
+                    dots.forEach(d => d.classList.remove('active'));
+                    dots[i].classList.add('active');
+                }
+            }
+        });
+    });
+
+    // Parallax Graphics (Cake, Balloons, Gallery)
+    // Only apply heavy scrub parallax on non-mobile devices for smoothness
+    const isMobile = window.innerWidth <= 900;
+    
+    gsap.utils.toArray('.gs-parallax').forEach(element => {
+        gsap.to(element, {
+            yPercent: isMobile ? 10 : 30, // Less movement on mobile
+            ease: "none",
+            scrollTrigger: {
+                trigger: element.parentElement,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: true
+            }
+        });
+    });
+
+    // Reveal Panels
+    gsap.utils.toArray('.gs-parallax-y').forEach(element => {
+        gsap.from(element, {
+            y: 100,
+            opacity: 0,
+            duration: 1.2,
+            ease: "power3.out",
+            scrollTrigger: {
+                trigger: element,
+                start: "top 85%",
+                toggleActions: "play none none reverse"
+            }
+        });
+    });
+}
+
+// 3. Confetti Trigger with Font Animation
+function triggerConfetti(btnElement) {
+    if(btnElement) {
+        btnElement.classList.add('btn-clicked-anim');
+        setTimeout(() => btnElement.classList.remove('btn-clicked-anim'), 500);
+    }
+    
+    var duration = 3 * 1000;
+    var animationEnd = Date.now() + duration;
+    var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 10000 };
+
+    function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
+    }
+
+    var interval = setInterval(function() {
+        var timeLeft = animationEnd - Date.now();
+        if (timeLeft <= 0) {
+            return clearInterval(interval);
+        }
+        var particleCount = 50 * (timeLeft / duration);
+        confetti(Object.assign({}, defaults, { particleCount,
+            origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }
+        }));
+        confetti(Object.assign({}, defaults, { particleCount,
+            origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }
+        }));
+    }, 250);
+}
+
+// Navigation Functions
+function scrollToSec(index) {
+    // We can use scrollIntoView for smooth vanilla scrolling
+    document.getElementById(`sec-${index}`).scrollIntoView({ behavior: 'smooth' });
+}
+
+let currentSection = 1;
+function scrollUp() {
+    if (currentSection > 1) {
+        currentSection--;
+        scrollToSec(currentSection);
+    }
+}
+function scrollDown() {
+    if (currentSection < 4) {
+        currentSection++;
+        scrollToSec(currentSection);
+    }
+}
+
+// Update current section tracking on scroll
+window.addEventListener('scroll', () => {
+    const sections = document.querySelectorAll('.section');
+    sections.forEach((sec, i) => {
+        const rect = sec.getBoundingClientRect();
+        if(rect.top >= -50 && rect.top <= window.innerHeight / 2) {
+            currentSection = i + 1;
+        }
+    });
+});
+</script>
+
+</body>
+</html>
