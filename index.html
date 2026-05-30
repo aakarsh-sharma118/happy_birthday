@@ -542,8 +542,15 @@ header {
     <div class="loading-bar-container">
         <div class="loading-bar-fill"></div>
     </div>
+    <div id="loader-btn-wrapper" style="display: none; margin-top: 15px;">
+        <button id="start-btn" style="padding: 10px 30px; border-radius: 30px; border: none; background: #fff; color: var(--text-red); font-weight: 800; cursor: pointer; font-family: 'Poppins', sans-serif; font-size: 18px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: transform 0.2s;">Tap to Open 🎀</button>
+    </div>
     <div class="loader-text-new">LOADING.</div>
 </div>
+
+<style>
+#start-btn:hover { transform: scale(1.05); }
+</style>
 
 <!-- Header -->
 <header>
@@ -758,29 +765,14 @@ window.addEventListener('load', () => {
         ease: "power2.inOut"
     })
     // Little pause when full
-    .to({}, { duration: 0.5 })
-    // Fade out preloader smoothly
-    .to('#preloader', {
-        opacity: 0,
-        duration: 0.8,
-        ease: "power2.inOut",
+    .to({}, { 
+        duration: 0.5,
         onComplete: () => {
-            // Use visibility to prevent layout reflow stutter
-            const pl = document.getElementById('preloader');
-            pl.style.visibility = 'hidden';
-            pl.style.pointerEvents = 'none';
-            // Start scroll animations exactly when ready
-            requestAnimationFrame(() => {
-                initScrollAnimations();
-                ScrollTrigger.refresh();
-                
-                // Attempt to play music automatically once preloader ends
-                if (!isMuted) {
-                    bgMusic.play().catch(e => {
-                        console.log('Autoplay blocked by browser until user interaction.');
-                    });
-                }
-            });
+            // Hide loading text and reveal the 'Tap to Open' button
+            document.querySelector('.loader-text-new').style.display = 'none';
+            const btnWrapper = document.getElementById('loader-btn-wrapper');
+            btnWrapper.style.display = 'block';
+            gsap.from(btnWrapper, { y: 20, opacity: 0, duration: 0.5, ease: "back.out(1.7)" });
         }
     });
     
@@ -792,11 +784,35 @@ window.addEventListener('load', () => {
         if(loadText) loadText.innerHTML = 'LOADING' + '.'.repeat(dots);
     }, 400);
     
-    // Clear interval when preloader fades
     setTimeout(() => clearInterval(dotInterval), 2500);
 });
 
-// 2. Initialize Main GSAP Animations
+// 2. Start Button Click (Bypasses Autoplay Restrictions)
+document.getElementById('start-btn').addEventListener('click', () => {
+    // Attempt to play music automatically once clicked
+    if (!isMuted) {
+        bgMusic.play().catch(e => {
+            console.log('Autoplay blocked by browser until user interaction.');
+        });
+    }
+
+    gsap.to('#preloader', {
+        opacity: 0,
+        duration: 0.8,
+        ease: "power2.inOut",
+        onComplete: () => {
+            const pl = document.getElementById('preloader');
+            pl.style.visibility = 'hidden';
+            pl.style.pointerEvents = 'none';
+            requestAnimationFrame(() => {
+                initScrollAnimations();
+                ScrollTrigger.refresh();
+            });
+        }
+    });
+});
+
+// 3. Initialize Main GSAP Animations
 function initScrollAnimations() {
     // Hero Text Stagger
     gsap.from('.gs-fade-up', {
