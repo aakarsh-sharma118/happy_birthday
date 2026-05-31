@@ -1,9 +1,9 @@
-const CACHE_NAME = 'birthday-cache-v2';
+const CACHE_NAME = 'birthday-cache-v3';
 const urlsToCache = [
     './',
     './index.html',
     './manifest.json',
-    './assets/birthday_cake_1780160233362.png',
+    './assets/birthday_cake_1780160233362.svg',
     './assets/cat_cake_preloader_1780163227004.png',
     './assets/memory_one_1780160303924.png',
     './assets/memory_three_1780160335503.png',

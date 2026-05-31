@@ -24,7 +24,7 @@
     <link rel="manifest" href="manifest.json" />
     <link
       rel="apple-touch-icon"
-      href="assets/birthday_cake_1780160233362.png"
+      href="assets/birthday_cake_1780160233362.svg"
     />
 
     <!-- Preconnect for Performance -->
@@ -54,11 +54,18 @@
       content="assets/new_cake_gifts_1780161455521.png"
     />
 
-    <!-- Favicon for the website tab -->
+    <!-- Favicon for the website tab (SVG — by the book, W3C spec) -->
     <link
       rel="icon"
-      href="assets/birthday_cake_1780160233362.png"
-      type="image/png"
+      href="assets/birthday_cake_1780160233362.svg"
+      type="image/svg+xml"
+    />
+    
+    <!-- Fallback favicon for legacy browsers that don't support SVG favicons -->
+    <link
+      rel="icon"
+      href="assets/birthday_cake_1780160233362.svg"
+      sizes="any"
     />
 
     <!-- Secure Fonts from Google -->
